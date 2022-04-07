@@ -1,0 +1,4 @@
+<div class="form-group">
+    <input type="text" [class.is.invalid]="ngControl.touched && ngControl.invalid" class="form-control mt-2" 
+    [formControl]="ngControl.control" placeholder="{{label}}" bsDatepicker [bsConfig]="bsConfig" [maxDate]="maxDate">
+</div>

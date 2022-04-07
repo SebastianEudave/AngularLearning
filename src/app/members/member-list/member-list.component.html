@@ -1,5 +1,49 @@
+<div class="text-center mt-3">
+    <h2>Your matches - {{pagination.totalItems}} found</h2>
+</div>
+
+<div class="container mt-3">
+    <form #form="ngForm" class="form-inline mb-3" (ngSubmit)="loadMembers()" autocomplete="off">
+        <div class="form-inline">
+            <label>Age from: </label>
+            <input type="number" class="form-control me-1" style="width: 90px" name="minAge" [(ngModel)]="userParams.minAge">
+        </div>
+
+        <div class="form-inline">
+            <label>Age to: </label>
+            <input type="number" class="form-control me-1" style="width: 90px" name="maxAge" [(ngModel)]="userParams.maxAge">
+        </div>
+
+        <div class="form-inline">
+            <label>Show: </label>
+            <select name="gender" style="width: 130px" [(ngModel)]="userParams.gender" class="form-control me-1">
+                <option *ngFor="let gender of genderList" [value]="gender.value">
+                    {{gender.display}}
+                </option>
+            </select>
+        </div>
+        
+        <button class="btn btn-primary me-1" type="submit">Apply Filters</button>
+        <button class="btn btn-info me-1" (click)="resetFilters()" type="submit">Reset Filters</button>
+    </form>
+</div>
+
 <div class="row">
-    <div *ngFor="let member of members$ | async" class="col-2">
+    <div *ngFor="let member of members" class="col-2">
         <app-member-card [member]="member"></app-member-card>
     </div>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+    <pagination [totalItems]="pagination.totalItems"
+            [boundaryLinks]="true"
+            [itemsPerPage]="pagination.itemsPerPage"
+            [(ngModel)]="pagination.currentPage"
+            (pageChanged)="pageChanged($event)"
+            [customFirstTemplate]="firstTemplate"
+            [customLastTemplate]="lastTemplate"
+            [customPreviousTemplate]="prevTemplate"
+            [customNextTemplate]="nextTemplate"
+            [customPageTemplate]="pageTemplate">
+    </pagination>
 </div>
