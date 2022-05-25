@@ -18,10 +18,14 @@ export class MessageService {
   getMessages(pageNumber: number, pageSize: number, container: string): Observable<PaginatedResult<Message[]>>{
     let params = getPaginationHeaders(pageNumber,pageSize);
     params=params.append("Container", container);
-    return getPaginatedResult<Partial<Message[]>>(this.baseUrl + "messages",params, this.http);
+    return getPaginatedResult<Message[]>(this.baseUrl + "messages",params, this.http);
   }
 
-  getMessageThread(username: string){
+  getMessageThread(username: string): Observable<Message[]>{
     return this.http.get<Message[]>(this.baseUrl + "messages/thread/" + username);
+  }
+
+  sendMessage(username: string, content: string): Observable<Message>{
+    return this.http.post<Message>(this.baseUrl + "messages", {recipientUsername: username, content});
   }
 }

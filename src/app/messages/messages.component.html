@@ -24,7 +24,7 @@
             <th style="width: 20%">Sent/Received</th>
             <th style="width: 20%"></th>
         </tr>
-        <tr *ngIf="let message of messages" 
+        <tr [hidden]="loading" *ngIf="let message of messages" 
             routerLink="{{container === 'Outbox' ? '/members/' + message.recipientUsername : '/members/' + message.senderUsername}}" 
             [queryParams]="{tab: 3}">
             <td>{{message.content}}</td>
@@ -52,16 +52,16 @@
     </table>
 </div>
 
-<div class="d-flex justify-content-center" *ngIf="pagination">
-    <pagination [totalItems]="pagination.totalItems"
-            [boundaryLinks]="true"
-            [itemsPerPage]="pagination.itemsPerPage"
-            [(ngModel)]="pagination.currentPage"
-            (pageChanged)="pageChanged($event)"
-            [customFirstTemplate]="firstTemplate"
-            [customLastTemplate]="lastTemplate"
-            [customPreviousTemplate]="prevTemplate"
-            [customNextTemplate]="nextTemplate"
-            [customPageTemplate]="pageTemplate">
+<div class="d-flex justify-content-center" *ngIf="pagination && !loading">
+    <pagination
+        [boundaryLinks]="true"
+        [totalItems]="pagination.totalItems"
+        [itemsPerPage]="pagination.itemsPerPage"
+        [(ngModel)]="pagination.currentPage"
+        (pageChanged)="pageChanged($event)"
+        previousText="&lsaquo;"
+        nextText="&rsaquo;"
+        firstText="&laquo;"
+        lastText="&raquo;">
     </pagination>
 </div>
