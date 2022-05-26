@@ -28,4 +28,8 @@ export class MessageService {
   sendMessage(username: string, content: string): Observable<Message>{
     return this.http.post<Message>(this.baseUrl + "messages", {recipientUsername: username, content});
   }
+
+  deleteMessage(id: number): Observable<Object>{
+    return this.http.delete(this.baseUrl + "messages/" + id);
+  }
 }
